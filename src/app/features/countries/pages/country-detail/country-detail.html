@@ -1,0 +1,152 @@
+<div class="max-w-5xl mx-auto px-6 py-10">
+
+  <!-- Botão voltar (estilo mapa) -->
+  <div class="mb-6">
+    <a
+      routerLink="/"
+      class="inline-flex items-center gap-2 bg-[#fdfaf5] text-[#6b1d1a]
+             px-5 py-3 rounded-2xl shadow-lg hover:shadow-xl transition
+             border border-[#eadfce]"
+    >
+      <span class="text-xl">←</span>
+      <span class="font-semibold">Voltar ao mapa</span>
+    </a>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="mt-10 flex justify-center">
+    <div class="bg-[#fdfaf5] rounded-3xl px-8 py-6 shadow-xl border border-[#eadfce] text-[#6b1d1a]">
+      <div class="flex items-center gap-3">
+        <div class="animate-spin w-5 h-5 rounded-full border-2 border-[#6b1d1a] border-t-transparent"></div>
+        <span class="font-semibold">Desenterrando detalhes...</span>
+      </div>
+      <p class="text-sm text-[#8a6f63] mt-2">Consultando cartas náuticas e arquivos secretos.</p>
+    </div>
+  </div>
+
+  <!-- Erro -->
+  <div *ngIf="error" class="mt-10 flex justify-center">
+    <div class="bg-[#fdfaf5] rounded-3xl px-8 py-6 shadow-xl border border-[#eadfce] text-red-700">
+      Não consegui abrir este pergaminho agora. Tenta novamente.
+    </div>
+  </div>
+
+  <!-- Pergaminho -->
+  <div *ngIf="!loading && !error && country"
+       class="max-w-4xl mx-auto mt-16
+            bg-[#fdfaf5]
+            rounded-3xl
+            shadow-2xl
+            p-10
+            border border-[#e5d8c7]">
+
+    <!-- “Queimadinho” / textura -->
+    <div class="pointer-events-none absolute inset-0 opacity-[0.08]"
+         style="background-image: radial-gradient(#6b1d1a 1px, transparent 1px);
+                background-size: 18px 18px;">
+    </div>
+
+    <!-- Título -->
+    <div class="relative">
+      <h1 class="text-5xl font-bold text-[#3e2a25] leading-tight">
+        {{ country?.name?.common }}
+      </h1>
+
+      <p class="mt-2 text-[#8a6f63]">
+        {{ country?.subregion || country?.region }} • {{ country?.continents?.[0] }}
+      </p>
+    </div>
+
+    <div class="relative mt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- Bandeira -->
+      <div class="bg-[#f6f1e8] rounded-3xl p-5 shadow-lg border border-[#eadfce]">
+        <img
+          [src]="country?.flags?.png"
+          [alt]="'Bandeira de ' + (country?.name?.common ?? '')"
+          class="w-full h-64 object-cover rounded-2xl"
+        />
+      </div>
+
+      <!-- Infos -->
+      <div class="space-y-4">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+          <div class="bg-[#f6f1e8] rounded-3xl p-5 shadow-lg border border-[#eadfce]">
+            <p class="text-sm text-[#8a6f63]">Capital</p>
+            <p class="text-xl font-semibold text-[#3e2a25]">
+              {{ country?.capital?.[0] || '—' }}
+            </p>
+          </div>
+
+          <div class="bg-[#f6f1e8] rounded-3xl p-5 shadow-lg border border-[#eadfce]">
+            <p class="text-sm text-[#8a6f63]">População</p>
+            <p class="text-xl font-semibold text-[#3e2a25]">
+              {{ country?.population | number }}
+            </p>
+          </div>
+
+          <div class="bg-[#f6f1e8] rounded-3xl p-5 shadow-lg border border-[#eadfce]">
+            <p class="text-sm text-[#8a6f63]">Região</p>
+            <p class="text-xl font-semibold text-[#3e2a25]">
+              {{ country?.region || '—' }}
+            </p>
+          </div>
+
+          <div class="bg-[#f6f1e8] rounded-3xl p-5 shadow-lg border border-[#eadfce]">
+            <p class="text-sm text-[#8a6f63]">Código</p>
+            <p class="text-xl font-semibold text-[#3e2a25]">
+              {{ country?.cca3 || '—' }}
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Selos -->
+        <div class="mt-4">
+          <p class="text-sm text-[#8a6f63] mb-2">Selos do tesouro</p>
+
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-2 rounded-xl bg-[#6b1d1a] text-white shadow">
+              💰 {{ (getCurrencyList().join(', ') || 'Sem moeda listada') }}
+            </span>
+
+            <span class="px-3 py-2 rounded-xl bg-[#3e2a25] text-white shadow">
+              🗣️ {{ (getLanguageList().join(', ') || 'Sem idioma listado') }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Fronteiras / rotas -->
+    <div class="relative mt-10">
+      <h2 class="text-2xl font-bold text-[#3e2a25]">Rotas vizinhas</h2>
+      <p class="text-[#8a6f63] mt-1">Clique para navegar pelos países fronteiriços.</p>
+
+      <div *ngIf="country?.borders?.length; else noBorders"
+           class="mt-4 flex flex-wrap gap-2">
+
+        <a
+          *ngFor="let b of country.borders"
+          [routerLink]="['/country', b]"
+          class="bg-[#f6f1e8] text-[#6b1d1a] font-semibold
+                 px-4 py-2 rounded-2xl shadow-lg hover:shadow-xl transition
+                 border border-[#eadfce]"
+        >
+         {{ b }}
+        </a>
+
+      </div>
+
+      <ng-template #noBorders>
+        <div class="mt-4 bg-[#f6f1e8] rounded-2xl p-4 border border-[#eadfce] text-[#8a6f63]">
+          Este país é uma ilha (ou não tem fronteiras terrestres).
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+</div>

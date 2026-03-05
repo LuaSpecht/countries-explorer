@@ -1,0 +1,61 @@
+<div class="max-w-6xl mx-auto px-6">
+
+  <!-- Barra de busca -->
+  <div class="flex justify-center mt-12">
+    <div class="flex items-center bg-[#fdfaf5] rounded-full px-6 py-4 w-[700px]
+                shadow-xl hover:shadow-2xl transition-all duration-300">
+      <svg class="w-5 h-5 text-[#6b1d1a] opacity-60 mr-4"
+           fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+
+      <input
+        type="text"
+        name="searchTerm"
+        [(ngModel)]="searchTerm"
+        (input)="filterCountries()"
+        placeholder="Buscar um país..."
+        class="flex-1 bg-transparent text-[#3e2a25] placeholder:text-[#a0897f]
+               focus:outline-none"
+      />
+
+      <div class="h-6 w-px bg-[#e6dfd6] mx-4"></div>
+
+      <select
+        [(ngModel)]="selectedRegion"
+        (change)="filterCountries()"
+        class="bg-transparent text-[#6b1d1a] font-medium focus:outline-none cursor-pointer"
+      >
+        <option value="">Todas</option>
+        <option *ngFor="let region of regions" [value]="region">
+          {{ region }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="mt-16 flex justify-center">
+    <div class="bg-[#fdfaf5] rounded-2xl px-6 py-4 shadow-lg text-[#6b1d1a]">
+      Carregando países...
+    </div>
+  </div>
+
+  <div *ngIf="error" class="mt-16 flex justify-center">
+    <div class="bg-[#fdfaf5] rounded-2xl px-6 py-4 shadow-lg text-red-700">
+      Ocorreu um erro ao carregar os países. Tenta novamente.
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error"
+       class="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
+    <app-country-card
+      *ngFor="let country of filteredCountries"
+      [country]="country">
+    </app-country-card>
+
+  </div>
+
+</div>
