@@ -83,7 +83,7 @@ A busca foi implementada localmente utilizando os dados já carregados da API, e
 
 # Sobre o desenvolvimento do projeto
 
-vezes, mas não é tão diferente do React a ponto de não ser "praticável". O uso do Tailwind foi uma proposta muito bem-vinda; mesmo que eu já estivesse um pouco enferrujada, consegui fazer o projeto fluir e relembrar dessa ferramenta que sempre gostei de usar. Pretendo, claro, continuar estudando mais sobre esse framework, mas esse primeiro contato me mostrou que ele não é uma monstruosidade; na verdade, é um framework bem organizado e intuitivo.
+Este foi um projeto desafiador, minha primeira experiência com o Angular, então me bati algumas vezes, mas não é tão diferente do React a ponto de não ser "praticável". O uso do Tailwind foi uma proposta muito bem-vinda; mesmo que eu já estivesse um pouco enferrujada, consegui fazer o projeto fluir e relembrar dessa ferramenta que sempre gostei de usar. Pretendo, claro, continuar estudando mais sobre esse framework, mas esse primeiro contato me mostrou que ele não é uma monstruosidade; na verdade, é um framework bem organizado e intuitivo.
 
 Tive de usar por algumas vezes o auxílio da IA como ferramenta, para que fosse possível sair de travas e esclarecer conceitos, mas sempre buscando entender as razões de suas escolhas e aprender com o código.
 
