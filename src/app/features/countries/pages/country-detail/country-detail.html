@@ -1,6 +1,5 @@
 <div class="max-w-5xl mx-auto px-6 py-10">
 
-  <!-- Botão voltar (estilo mapa) -->
   <div class="mb-6">
     <a
       routerLink="/"
@@ -13,7 +12,6 @@
     </a>
   </div>
 
-  <!-- Loading -->
   <div *ngIf="loading" class="mt-10 flex justify-center">
     <div class="bg-[#fdfaf5] rounded-3xl px-8 py-6 shadow-xl border border-[#eadfce] text-[#6b1d1a]">
       <div class="flex items-center gap-3">
@@ -24,14 +22,12 @@
     </div>
   </div>
 
-  <!-- Erro -->
   <div *ngIf="error" class="mt-10 flex justify-center">
     <div class="bg-[#fdfaf5] rounded-3xl px-8 py-6 shadow-xl border border-[#eadfce] text-red-700">
       Não consegui abrir este pergaminho agora. Tenta novamente.
     </div>
   </div>
 
-  <!-- Pergaminho -->
   <div *ngIf="!loading && !error && country"
        class="max-w-4xl mx-auto mt-16
             bg-[#fdfaf5]
@@ -40,15 +36,13 @@
             p-10
             border border-[#e5d8c7]">
 
-    <!-- “Queimadinho” / textura -->
     <div class="pointer-events-none absolute inset-0 opacity-[0.08]"
          style="background-image: radial-gradient(#6b1d1a 1px, transparent 1px);
                 background-size: 18px 18px;">
     </div>
 
-    <!-- Título -->
     <div class="relative">
-      <h1 class="text-5xl font-bold text-[#3e2a25] leading-tight">
+      <h1 class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#3e2a25] leading-tight">
         {{ country?.name?.common }}
       </h1>
 
@@ -59,16 +53,14 @@
 
     <div class="relative mt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
 
-      <!-- Bandeira -->
       <div class="bg-[#f6f1e8] rounded-3xl p-5 shadow-lg border border-[#eadfce]">
         <img
           [src]="country?.flags?.png"
           [alt]="'Bandeira de ' + (country?.name?.common ?? '')"
-          class="w-full h-64 object-cover rounded-2xl"
+          class="w-full h-48 sm:h-64 object-cover rounded-2xl"
         />
       </div>
 
-      <!-- Infos -->
       <div class="space-y-4">
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -103,7 +95,6 @@
 
         </div>
 
-        <!-- Selos -->
         <div class="mt-4">
           <p class="text-sm text-[#8a6f63] mb-2">Selos do tesouro</p>
 
@@ -121,7 +112,6 @@
       </div>
     </div>
 
-    <!-- Fronteiras / rotas -->
     <div class="relative mt-10">
       <h2 class="text-2xl font-bold text-[#3e2a25]">Rotas vizinhas</h2>
       <p class="text-[#8a6f63] mt-1">Clique para navegar pelos países fronteiriços.</p>
@@ -134,8 +124,7 @@
           [routerLink]="['/country', b]"
           class="bg-[#f6f1e8] text-[#6b1d1a] font-semibold
                  px-4 py-2 rounded-2xl shadow-lg hover:shadow-xl transition
-                 border border-[#eadfce]"
-        >
+                 border border-[#eadfce]">
          {{ b }}
         </a>
 

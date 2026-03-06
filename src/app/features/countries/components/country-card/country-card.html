@@ -1,17 +1,17 @@
 <div
   [routerLink]="['/country', country?.cca3]"
-  class="bg-[#fdfaf5] rounded-3xl p-6 shadow-lg
+  class="bg-[#fdfaf5] rounded-3xl p-4 shadow-lg
          hover:shadow-2xl hover:-translate-y-2
          transition-all duration-300 cursor-pointer
-         hover:scale-[1.02]"
+         hover:scale-[1.02] hover:text-lg"
 >
   <img
     [src]="country?.flags?.png"
     [alt]="'Bandeira de ' + (country?.name?.common ?? '')"
-    class="w-full h-32 object-cover rounded-2xl mb-5"
+    class="w-full h-32 rounded-2xl mb-5"
   />
 
-  <h2 class="text-2xl font-semibold text-[#3e2a25]">
+  <h2 class="text-md font-semibold text-[#3e2a25] ">
     {{ country?.name?.common }}
   </h2>
 
@@ -19,7 +19,7 @@
     {{ country?.region }}
   </p>
 
-  <p class="text-[#6b1d1a] mt-2 font-medium">
+  <p class="text-[#6b1d1a] mt-1 font-medium">
     {{ country?.borders?.length || 0 }} fronteiras
   </p>
 </div>
