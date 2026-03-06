@@ -36,14 +36,11 @@ export class CountryDetailComponent {
 
     this.http.get<any>(url).subscribe({
       next: (data) => {
-        console.log('DETAIL NEXT raw:', data);
       
         this.country = Array.isArray(data) ? data[0] : data;
-        console.log('DETAIL country parsed:', this.country?.name?.common);
       
         this.loading = false;
         this.cdr.detectChanges();
-        console.log('DETAIL loading false');
       },
       error: (err) => {
         console.error('DETAIL ERROR:', err);

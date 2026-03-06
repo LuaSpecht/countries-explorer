@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-
+import { HttpClient } from '@angular/common/http';
 import { CountryCardComponent } from '../../components/country-card/country-card';
 
 @Component({
@@ -11,7 +10,6 @@ import { CountryCardComponent } from '../../components/country-card/country-card
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     CountryCardComponent
   ],
   templateUrl: './country-list.html'
@@ -28,7 +26,7 @@ export class CountryListComponent {
   loading = true;
   error = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.http.get<any[]>(
@@ -37,8 +35,9 @@ export class CountryListComponent {
       next: (data) => {
         this.countries = data;
         this.regions = Array.from(new Set(data.map(c => c.region).filter(Boolean))).sort();
-        this.filteredCountries = data.slice(0, 24);
+        this.filteredCountries = data.sort((a, b) => a.name.common.localeCompare(b.name.common)).slice(0, 24);
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.error = true;
@@ -55,6 +54,7 @@ export class CountryListComponent {
     const matchesName = !term || name.includes(term);
     const matchesRegion = !this.selectedRegion || c.region === this.selectedRegion;
     return matchesName && matchesRegion;
-  });
+  }).sort((a, b) => a.name.common.localeCompare(b.name.common));
+
 }
 }
